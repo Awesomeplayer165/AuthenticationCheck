@@ -19,3 +19,7 @@ This repository shows how to check username, email, and password UITextFields wh
 ## Usage: 
 
 Copy the UITextFieldAuthenticationChecking.swift
+
+### Created and Maintained by:
+
+https://github.com/Awesomeplayer165
