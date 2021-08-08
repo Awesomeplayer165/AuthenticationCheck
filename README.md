@@ -22,4 +22,4 @@ Copy the UITextFieldAuthenticationChecking.swift
 
 ### Created and Maintained by:
 
-https://github.com/Awesomeplayer165
+[Jacob Trentini](https://github.com/Awesomeplayer165)
