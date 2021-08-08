@@ -66,9 +66,6 @@ enum UITextFieldAuthenticationGeneralError: Error {
     /// The username contains the password
     case usernameContainsPassword
     
-    /// The email contains the username
-    case emailContainsUsername
-    
     /// The email contains the password
     case emailContainsPassword
     
@@ -188,10 +185,6 @@ class UITextFieldAuthenticationCheck {
         
         guard !username.contains(password) else {
             throw UITextFieldAuthenticationGeneralError.usernameContainsPassword
-        }
-        
-        guard !email.contains(username) else {
-            throw UITextFieldAuthenticationGeneralError.emailContainsUsername
         }
         
         guard !email.contains(password) else {

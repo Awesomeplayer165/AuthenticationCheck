@@ -7,6 +7,12 @@
 
 import UIKit
 
+class UserProfile {
+    var username = String()
+    var email = String()
+    var password = String()
+}
+
 class SignUp: UIViewController {
     public let checker = UITextFieldAuthenticationCheck()
     
@@ -14,60 +20,85 @@ class SignUp: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
+    @IBOutlet weak var errorLabel: UILabel!
     
     @IBAction func createAnAccountAction(_ sender: Any) {
         do {
             try checker.evaluate(username: usernameField.text!, email: emailField.text!, password: passwordField.text!, confirmPassword: confirmPasswordField.text!)
+            print("Perfect credentials entered!")
+            view.endEditing(true)
+            errorLabel.isHidden = true
+            errorLabel.text?.removeAll()
+            
+            let successVC = storyboard?.instantiateViewController(withIdentifier: "SuccessfullyLoggedIn") as! SuccessfullyLoggedIn
+            navigationController?.pushViewController(successVC, animated: true)
+            let signedInUser = UserProfile()
+            signedInUser.username = usernameField.text!
+            signedInUser.email = emailField.text!
+            signedInUser.password = passwordField.text!
+            successVC.signedInUser = signedInUser
         }
 
         // General Errors
          catch UITextFieldAuthenticationGeneralError.passwordContainsEmail {
-            print("Password contains email")
+             showAlert(message: "Password contains email", textFields: [usernameField, passwordField])
         } catch UITextFieldAuthenticationGeneralError.passwordContainsUsername {
-            print("Password contains username")
+            showAlert(message: "Password contains username", textFields: [passwordField, usernameField])
         } catch UITextFieldAuthenticationGeneralError.emailContainsPassword {
-            print("Email contains password")
-        } catch UITextFieldAuthenticationGeneralError.emailContainsUsername {
-            print("Email contains username")
+            showAlert(message: "Email contains password", textFields: [emailField, passwordField])
         } catch UITextFieldAuthenticationGeneralError.usernameContainsEmail {
-            print("Username contains email")
+            showAlert(message: "Username contains email", textFields: [usernameField, emailField])
         } catch UITextFieldAuthenticationGeneralError.usernameContainsPassword {
-            print("Username contains password")
+            showAlert(message: "Username contains password", textFields: [usernameField, passwordField])
         } catch UITextFieldAuthenticationGeneralError.passwordDoesNotMatchConfirmPassword {
-            print("Password does not match Confirm Password")
+            showAlert(message: "Password does not match Confirm Password", textFields: [passwordField, confirmPasswordField])
         }
 
         // Username Error
          catch UITextFieldAuthenticationUsernameError.empty {
-            print("Please enter a username")
+            showAlert(message: "Please enter a username", textFields: [usernameField])
+             usernameField.shake(baseColor: UIColor.systemPink.cgColor, numberOfShakes: 3, revert: true)
         }
 
         // Email Errors
          catch UITextFieldAuthenticationEmailError.empty {
-            print("Please enter an email")
+            showAlert(message: "Please enter an email", textFields: [emailField])
         } catch UITextFieldAuthenticationEmailError.invalidEmail {
-            print("Please enter a valid email")
+            showAlert(message: "Please enter a valid email", textFields: [emailField])
         }
 
         // Password Errors
          catch UITextFieldAuthenticationPasswordError.empty {
-           print("Please enter a password")
+           showAlert(message: "Please enter a password", textFields: [passwordField])
         } catch UITextFieldAuthenticationPasswordError.passwordContainsNoNumbers {
-            print("At least 1 number is required in the password")
+            showAlert(message: "At least 1 number is required in the password", textFields: [passwordField])
         } catch UITextFieldAuthenticationPasswordError.passwordContainsNoLetters {
-            print("At Least 1 letter is required in the password")
+            showAlert(message: "At Least 1 letter is required in the password", textFields: [passwordField])
         } catch UITextFieldAuthenticationPasswordError.passwordContainsMoreCharacterLimit {
-            print("The password cannot exceed \(checker.passwordMinimumLength + 1) characters in length")
+            showAlert(message: "The password cannot exceed \(checker.passwordMinimumLength + 1) characters in length", textFields: [passwordField])
         } catch UITextFieldAuthenticationPasswordError.passwordTooShort {
-            print("The password must include \(checker.passwordMinimumLength) characters")
+            showAlert(message: "The password must include \(checker.passwordMinimumLength) characters", textFields: [passwordField])
         } catch {
-            print("Error uncaught = \(error.localizedDescription)")
+            fatalError("Error uncaught = \(error.localizedDescription)")
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+    
+    private func showAlert(message:String, textFields: [UITextField]) {
+        let alert = UIAlertController(title: message, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+        errorLabel.isHidden = false
+        errorLabel.text = message
+        
+        for textField in textFields {
+            textField.shake(baseColor: UIColor.systemPink.cgColor, numberOfShakes: 3, revert: true)
+        }
     }
     
 }

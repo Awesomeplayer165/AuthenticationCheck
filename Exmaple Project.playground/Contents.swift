@@ -66,9 +66,6 @@ enum UITextFieldAuthenticationGeneralError: Error {
     /// The username contains the password
     case usernameContainsPassword
     
-    /// The email contains the username
-    case emailContainsUsername
-    
     /// The email contains the password
     case emailContainsPassword
     
@@ -190,10 +187,6 @@ class UITextFieldAuthenticationCheck {
             throw UITextFieldAuthenticationGeneralError.usernameContainsPassword
         }
         
-        guard !email.contains(username) else {
-            throw UITextFieldAuthenticationGeneralError.emailContainsUsername
-        }
-        
         guard !email.contains(password) else {
             throw UITextFieldAuthenticationGeneralError.emailContainsPassword
         }
@@ -272,10 +265,9 @@ extension String {
 
 let checker = UITextFieldAuthenticationCheck()
 checker.passwordRequiresAtLeastOneNumber = false
-checker.passwordMinimumLength = 20
 
 do {
-    try checker.evaluate(username: "Jacob Trentini", email: "jacobtrentini@gmail.com", password: "qwertyuiopasdfghjklzxcvbnm", confirmPassword: "qwertyuiopasdfghjklzxcvbnm")
+    try checker.evaluate(username: "bob", email: "bob@gmail.com", password: "anc", confirmPassword: "anc")
     print("Perfect Username, Email, Password, and Confirm Password!")
 }
 
@@ -286,8 +278,6 @@ do {
     print("Password contains username")
 } catch UITextFieldAuthenticationGeneralError.emailContainsPassword {
     print("Email contains password")
-} catch UITextFieldAuthenticationGeneralError.emailContainsUsername {
-    print("Email contains username")
 } catch UITextFieldAuthenticationGeneralError.usernameContainsEmail {
     print("Username contains email")
 } catch UITextFieldAuthenticationGeneralError.usernameContainsPassword {

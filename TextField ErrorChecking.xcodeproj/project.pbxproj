@@ -15,6 +15,7 @@
 		1D700D3426BF4C00007F1833 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D700D3226BF4C00007F1833 /* LaunchScreen.storyboard */; };
 		1D700D3C26BF4FA3007F1833 /* Successfully Logged In.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D700D3B26BF4FA3007F1833 /* Successfully Logged In.swift */; };
 		1D700D3E26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D700D3D26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift */; };
+		1DECDDDB26BFA85B00E1E75F /* textFieldShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECDDDA26BFA85B00E1E75F /* textFieldShake.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		1D700D3526BF4C00007F1833 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D700D3B26BF4FA3007F1833 /* Successfully Logged In.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Successfully Logged In.swift"; sourceTree = "<group>"; };
 		1D700D3D26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldAuthenticationCheck.swift; sourceTree = "<group>"; };
+		1DECDDDA26BFA85B00E1E75F /* textFieldShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textFieldShake.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				1D700D3B26BF4FA3007F1833 /* Successfully Logged In.swift */,
 				1D700D3D26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift */,
 				1D700D2D26BF4BFF007F1833 /* Main.storyboard */,
+				1DECDDDA26BFA85B00E1E75F /* textFieldShake.swift */,
 				1D700D3026BF4C00007F1833 /* Assets.xcassets */,
 				1D700D3226BF4C00007F1833 /* LaunchScreen.storyboard */,
 				1D700D3526BF4C00007F1833 /* Info.plist */,
@@ -148,6 +151,7 @@
 				1D700D3C26BF4FA3007F1833 /* Successfully Logged In.swift in Sources */,
 				1D700D3E26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift in Sources */,
 				1D700D2826BF4BFF007F1833 /* AppDelegate.swift in Sources */,
+				1DECDDDB26BFA85B00E1E75F /* textFieldShake.swift in Sources */,
 				1D700D2A26BF4BFF007F1833 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
