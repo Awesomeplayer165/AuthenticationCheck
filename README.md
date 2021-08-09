@@ -2,6 +2,11 @@
 
 **This repository shows how to check username, email, and password UITextFields while creating an account for a user.**
 
+
+
+https://user-images.githubusercontent.com/70717139/128650551-55c2d08e-6000-471a-a074-c5e4104ddd82.MP4
+
+
 ## Features:
 
 #### Highlights:
