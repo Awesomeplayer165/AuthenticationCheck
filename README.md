@@ -127,7 +127,7 @@ checker.passwordMaximumLength = 50
 
 If you need to manage multiple of these settings in different areas of your applications, then layouts are for you
 
-##### Customize the layout with the ```AuthenticationCheckLayout```` protocol
+##### Customize the layout with the **```AuthenticationCheckLayout```** protocol
 
 ```swift
 import UIKit
@@ -150,7 +150,7 @@ class MyAuthenticationCheckLayout: AuthenticationCheckLayout {
 
 #### Update your panel layout
 
-Manually set the ```AuthenticationCheck.layout``` to the new layout object directly
+Manually set the **```AuthenticationCheck.layout```** to the new layout object directly
 
 ```swift
 checker.layout = NewLayout()
