@@ -1,5 +1,5 @@
 //
-//  UITextFieldAuthenticationCheck.swift
+//  AuthenticationCheck.swift
 //  TextField ErrorChecking
 //
 //  Created by Jacob Trentini on 8/7/21.
@@ -8,14 +8,14 @@
 import Foundation
 
 /// Errors the user made concerning the username data
-enum UITextFieldAuthenticationUsernameError: Error {
+enum AuthenticationCheckUsernameError: Error {
     
     // The username field was empty
     case empty
 }
 
 /// Errors the user made concerning the email data
-enum UITextFieldAuthenticationEmailError: Error {
+enum AuthenticationCheckEmailError: Error {
     
     /// The email Field was empty
     case empty
@@ -25,32 +25,34 @@ enum UITextFieldAuthenticationEmailError: Error {
 }
 
 /// Errors the user made concerning the password data
-enum UITextFieldAuthenticationPasswordError: Error {
+enum AuthenticationCheckPasswordError: Error {
     
     /// The password field was empty
     case empty
     
-    /// The password was too short
+    /// The password contains less characters than the character requirement
     ///
-    /// The minimum length for a password is 8 characters
+    /// The default minimum length for a password is 8 characters. You change can this limit by accessing passwordMinimumLength
     case passwordTooShort
     
     /// The password contains No Numbers
     ///
-    /// The password should include at least 1 number. You can change this by accessing
+    /// The password should include at least 1 number. You can change this by accessing AuthenticationCheck.passwordRequiresAtLeastOneNumber
     case passwordContainsNoNumbers
     
     /// The password contains no Letters
     ///
-    /// The password should include at least 1 Letter. You can change this by accessing
+    /// The password should include at least 1 Letter. You can change this by accessing AuthenticationCheck.passwordRequiresAtLeastOneLetter
     case passwordContainsNoLetters
     
     /// The password contains more characters than the character limit
-    case passwordContainsMoreCharacterLimit
+    ///
+    ///The default maximum length for a password is 100 characters. You can change this limit by accessing the AuthenticationCheck.passwordMaximumLength
+    case passwordTooLong
 }
 
 /// Errors the user made concerning the confirmPassword data
-enum UITextFieldAuthenticationConfirmPasswordError: Error {
+enum AuthenticationCheckConfirmPasswordError: Error {
     case empty
 }
 
@@ -58,7 +60,7 @@ enum UITextFieldAuthenticationConfirmPasswordError: Error {
 ///
 /// These usually contain the user entering field information that already exists in another field.
 /// Even though some of these fields overlap, all of the errors are covered
-enum UITextFieldAuthenticationGeneralError: Error {
+enum AuthenticationCheckGeneralError: Error {
     
     /// The username contains the email
     case usernameContainsEmail
@@ -79,8 +81,26 @@ enum UITextFieldAuthenticationGeneralError: Error {
     case passwordDoesNotMatchConfirmPassword
 }
 
+enum AuthenticationCheckPasswordRequirementsError: Error {
+    
+    /// The password minimum and maximum constraints are incorrect
+    ///
+    /// For example, if the minimum required length is 10 and the maximum length is 9, then it will return this error
+    case conflictingPasswordMinumumAndMaximumRequirements
+    
+    /// The password minimum requirement was invalid
+    ///
+    /// This can usually occur when you set this value to a negative integer
+    case passwordMinimumRequirementInvalid
+    
+    /// The password maximum requirement was invalid
+    ///
+    /// This can usually occur when you set this value to a negative integer
+    case passwordMaximumRequirementInValid
+}
+
 /// The main class that includes functions to check an application's needs for authentication
-class UITextFieldAuthenticationCheck {
+class AuthenticationCheck {
     private let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
     
     /// The password entered should have a minimum requirement of at least 1 number
@@ -103,13 +123,36 @@ class UITextFieldAuthenticationCheck {
     ///The default value is 100
     public var passwordMaximumLength = 100
     
+    public var layout:AuthenticationCheckLayout? {
+        get {
+            return layout
+        }
+        set {
+            if let layout = newValue {
+                passwordMaximumLength = layout.passwordMaximumLength
+                passwordMinimumLength = layout.passwordMinimumLength
+                passwordRequiresAtLeastOneNumber = layout.passwordRequiresAtLeastOneNumber
+                passwordRequiresAtLeastOneLetter = layout.passwordRequiresAtLeastOneLetter
+            } else {
+                passwordRequiresAtLeastOneNumber = true
+                passwordRequiresAtLeastOneLetter = true
+                passwordMinimumLength = 8
+                passwordMaximumLength = 100
+            }
+        }
+    }
+    
+    public func invalidateLayout() {
+        layout = nil
+    }
+    
     
     /// Responsible for evaluating a username entered
     private func evaluateUsername(_ username: String) throws {
         
         /// Empty Username entered
         guard !username.isEmpty else {
-            throw UITextFieldAuthenticationUsernameError.empty
+            throw AuthenticationCheckUsernameError.empty
         }
     }
     
@@ -118,13 +161,13 @@ class UITextFieldAuthenticationCheck {
         
         // Empty Email entered
         guard !email.isEmpty else {
-            throw UITextFieldAuthenticationEmailError.empty
+            throw AuthenticationCheckEmailError.empty
         }
         
         // Performing RegEx on Email
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         if emailPred.evaluate(with: email) == false {
-            throw UITextFieldAuthenticationEmailError.invalidEmail
+            throw AuthenticationCheckEmailError.invalidEmail
         }
     }
     
@@ -133,31 +176,31 @@ class UITextFieldAuthenticationCheck {
         
         // Empty Password entered
         guard !password.isEmpty else {
-            throw UITextFieldAuthenticationPasswordError.empty
+            throw AuthenticationCheckPasswordError.empty
         }
         
         // Contains more than 8 charaters
         guard password.count >= passwordMinimumLength else {
-            throw UITextFieldAuthenticationPasswordError.passwordTooShort
+            throw AuthenticationCheckPasswordError.passwordTooShort
         }
 
         // Contains At Least 1 Number
         if passwordRequiresAtLeastOneNumber {
             guard password.containsAtLeastOneNumber() && passwordRequiresAtLeastOneNumber else {
-                throw UITextFieldAuthenticationPasswordError.passwordContainsNoNumbers
+                throw AuthenticationCheckPasswordError.passwordContainsNoNumbers
             }
         }
         
         // Contains At Least 1 Letter
         if passwordRequiresAtLeastOneLetter {
             guard password.containsAtLeastOneLetter() && passwordRequiresAtLeastOneLetter else {
-                throw UITextFieldAuthenticationPasswordError.passwordContainsNoLetters
+                throw AuthenticationCheckPasswordError.passwordContainsNoLetters
             }
         }
         
         // Contains more than characterLimit characters
         guard password.count <= passwordMaximumLength else {
-            throw UITextFieldAuthenticationPasswordError.passwordContainsMoreCharacterLimit
+            throw AuthenticationCheckPasswordError.passwordTooLong
         }
     }
     
@@ -166,7 +209,7 @@ class UITextFieldAuthenticationCheck {
         
         /// Empty Confirm Password entered
         guard !confirmPassword.isEmpty else {
-            throw UITextFieldAuthenticationConfirmPasswordError.empty
+            throw AuthenticationCheckConfirmPasswordError.empty
         }
     }
     
@@ -179,28 +222,41 @@ class UITextFieldAuthenticationCheck {
     ///   - password: The Password String the user entered
     ///   - confirmPassword: Confirm Password String
     public func evaluate(username: String, email: String, password: String, confirmPassword: String) throws {
+        
+        guard passwordMinimumLength > 0 else {
+            throw AuthenticationCheckPasswordRequirementsError.passwordMinimumRequirementInvalid
+        }
+        
+        guard passwordMaximumLength > 0 else {
+            throw AuthenticationCheckPasswordRequirementsError.passwordMaximumRequirementInValid
+        }
+        
+        guard passwordMinimumLength < passwordMaximumLength else {
+            throw AuthenticationCheckPasswordRequirementsError.conflictingPasswordMinumumAndMaximumRequirements
+        }
+        
         guard !username.contains(email) else {
-            throw UITextFieldAuthenticationGeneralError.usernameContainsEmail
+            throw AuthenticationCheckGeneralError.usernameContainsEmail
         }
         
         guard !username.contains(password) else {
-            throw UITextFieldAuthenticationGeneralError.usernameContainsPassword
+            throw AuthenticationCheckGeneralError.usernameContainsPassword
         }
         
         guard !email.contains(password) else {
-            throw UITextFieldAuthenticationGeneralError.emailContainsPassword
+            throw AuthenticationCheckGeneralError.emailContainsPassword
         }
         
         guard !password.contains(username) else {
-            throw UITextFieldAuthenticationGeneralError.passwordContainsUsername
+            throw AuthenticationCheckGeneralError.passwordContainsUsername
         }
         
         guard !password.contains(email) else {
-            throw UITextFieldAuthenticationGeneralError.passwordContainsEmail
+            throw AuthenticationCheckGeneralError.passwordContainsEmail
         }
         
         guard password == confirmPassword else {
-            throw UITextFieldAuthenticationGeneralError.passwordDoesNotMatchConfirmPassword
+            throw AuthenticationCheckGeneralError.passwordDoesNotMatchConfirmPassword
         }
         
         try evaluateUsername(username)
@@ -216,16 +272,21 @@ class UITextFieldAuthenticationCheck {
     ///   - password: The Password String the user entered
     ///   - confirmPassword: The Confirm Password String the user entered
     public func evaluate(email: String, password: String, confirmPassword: String) throws {
+        
+        guard passwordMinimumLength <= passwordMaximumLength else {
+            throw AuthenticationCheckPasswordRequirementsError.conflictingPasswordMinumumAndMaximumRequirements
+        }
+        
         guard !email.contains(password) else {
-            throw UITextFieldAuthenticationGeneralError.emailContainsPassword
+            throw AuthenticationCheckGeneralError.emailContainsPassword
         }
         
         guard !password.contains(email) else {
-            throw UITextFieldAuthenticationGeneralError.passwordContainsEmail
+            throw AuthenticationCheckGeneralError.passwordContainsEmail
         }
         
         guard password == confirmPassword else {
-            throw UITextFieldAuthenticationGeneralError.passwordDoesNotMatchConfirmPassword
+            throw AuthenticationCheckGeneralError.passwordDoesNotMatchConfirmPassword
         }
         
         try evaluateEmail(email)
@@ -263,51 +324,84 @@ extension String {
     }
 }
 
-let checker = UITextFieldAuthenticationCheck()
-checker.passwordRequiresAtLeastOneNumber = false
+protocol AuthenticationCheckLayout {
+    var passwordRequiresAtLeastOneNumber:Bool { get }
+    var passwordRequiresAtLeastOneLetter:Bool { get }
+    var passwordMinimumLength:Int { get }
+    var passwordMaximumLength:Int { get }
+}
+
+class MyAuthenticationLayout: AuthenticationCheckLayout {
+    var passwordRequiresAtLeastOneNumber = false
+    
+    var passwordRequiresAtLeastOneLetter = false
+    
+    var passwordMinimumLength = 18
+    
+    var passwordMaximumLength = 20
+    
+}
+
+let checker = AuthenticationCheck()
+checker.layout = MyAuthenticationLayout()
+checker.invalidateLayout()
 
 do {
-    try checker.evaluate(username: "bob", email: "bob@gmail.com", password: "anc", confirmPassword: "anc")
+    try checker.evaluate(username: "bob", email: "bob@gmail.com", password: "12345678a", confirmPassword: "12345678a")
     print("Perfect Username, Email, Password, and Confirm Password!")
 }
 
+// Password Conflicting Errors
+
+catch AuthenticationCheckPasswordRequirementsError.passwordMinimumRequirementInvalid {
+    print("Password minimum requirement invalid. Make sure this value is not negative")
+}
+
+catch AuthenticationCheckPasswordRequirementsError.passwordMaximumRequirementInValid {
+    print("Password maximum requirement invalid. Make sure this value is not negative")
+}
+
+catch AuthenticationCheckPasswordRequirementsError.conflictingPasswordMinumumAndMaximumRequirements {
+    print("Conflicting Password minimum and maximum requirements. Make sure they do not conflict. Refer to the documentation for more information")
+}
+
 // General Errors
- catch UITextFieldAuthenticationGeneralError.passwordContainsEmail {
+catch AuthenticationCheckGeneralError.passwordContainsEmail {
     print("Password contains email")
-} catch UITextFieldAuthenticationGeneralError.passwordContainsUsername {
+} catch AuthenticationCheckGeneralError.passwordContainsUsername {
     print("Password contains username")
-} catch UITextFieldAuthenticationGeneralError.emailContainsPassword {
+} catch AuthenticationCheckGeneralError.emailContainsPassword {
     print("Email contains password")
-} catch UITextFieldAuthenticationGeneralError.usernameContainsEmail {
+} catch AuthenticationCheckGeneralError.usernameContainsEmail {
     print("Username contains email")
-} catch UITextFieldAuthenticationGeneralError.usernameContainsPassword {
+} catch AuthenticationCheckGeneralError.usernameContainsPassword {
     print("Username contains password")
-} catch UITextFieldAuthenticationGeneralError.passwordDoesNotMatchConfirmPassword {
+} catch AuthenticationCheckGeneralError.passwordDoesNotMatchConfirmPassword {
     print("Password does not match Confirm Password")
 }
 
 // Username Error
- catch UITextFieldAuthenticationUsernameError.empty {
+ catch AuthenticationCheckUsernameError.empty {
     print("Please enter a username")
 }
 
 // Email Errors
- catch UITextFieldAuthenticationEmailError.empty {
+ catch AuthenticationCheckEmailError.empty {
     print("Please enter an email")
-} catch UITextFieldAuthenticationEmailError.invalidEmail {
+} catch AuthenticationCheckEmailError.invalidEmail {
     print("Please enter a valid email")
 }
 
 // Password Errors
- catch UITextFieldAuthenticationPasswordError.empty {
+ catch AuthenticationCheckPasswordError.empty {
    print("Please enter a password")
-} catch UITextFieldAuthenticationPasswordError.passwordContainsNoNumbers {
+} catch AuthenticationCheckPasswordError.passwordContainsNoNumbers {
     print("At least 1 number is required in the password")
-} catch UITextFieldAuthenticationPasswordError.passwordContainsNoLetters {
+} catch AuthenticationCheckPasswordError.passwordContainsNoLetters {
     print("At Least 1 letter is required in the password")
-} catch UITextFieldAuthenticationPasswordError.passwordContainsMoreCharacterLimit {
+} catch AuthenticationCheckPasswordError.passwordTooLong {
     print("The password cannot exceed \(checker.passwordMinimumLength + 1) characters in length")
-} catch UITextFieldAuthenticationPasswordError.passwordTooShort {
+} catch AuthenticationCheckPasswordError.passwordTooShort {
     print("The password must include \(checker.passwordMinimumLength) characters")
 } catch {
     print("Error uncaught = \(error.localizedDescription)")
