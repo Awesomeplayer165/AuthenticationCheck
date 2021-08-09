@@ -2,7 +2,7 @@
 
 **This repository shows how to check username, email, and password UITextFields while creating an account for a user.**
 
-https://github.com/Awesomeplayer165/UITextField-Error-Checking/blob/95f506561c423dc9222d33292c1e5bd4bab58053/UITextField%20ErrorChecking%20demo.MP4
+[https://github.com/Awesomeplayer165/UITextField-Error-Checking/blob/95f506561c423dc9222d33292c1e5bd4bab58053/UITextField%20ErrorChecking%20demo.MP4]
 
 ## Features:
 
