@@ -1,4 +1,4 @@
-# UITextField-Error-Checking
+# Authentication Check
 
 **This repository shows how to check username, email, and password UITextFields while creating an account for a user.**
 
@@ -7,23 +7,24 @@
 
 ## Features:
 
-#### Highlights:
 - None of the fields' values can match each other's values
 - The password field must be strong. More information below
 - If there a problem that arises, then the appropriate UITextField would shake and become red. Furthermore, there is a message informing the user on the problem.
-- If your app does not need username, ErrorChecking can exclude username
+- If your app does not need username, AuthenticationCheck can exclude username
+- Virtually everything can be customized to your liking, from password too short and long descriptions to the limit of characters and if a number is required
 
 #### Password Constraints:
 - At least 8 characters
 - Must include at least 1 number and 1 letter
 - Should not exceed 100 characters
+- You can change these password constraints to your needs
 
 #### This example project also shows how to:
 - Utilize throwing Errors in a function.
 
 ## Installation
 
-Copy the UITextFieldAuthenticationCheck.swift file into your Authentication project
+Copy the AuthenticationCheck.swift file into your Authentication project
 
 ## Getting Started
 
@@ -32,10 +33,14 @@ Copy the UITextFieldAuthenticationCheck.swift file into your Authentication proj
 ```swift
 import UIKit
 
-class SignUp: UIViewController {
+class UserProfile {
+    var username = String()
+    var email = String()
+    var password = String()
+}
 
-    // Create an instance of UITextFieldAuthenticationCheck
-    private let checker = UITextFieldAuthenticationCheck()
+class SignUp: UIViewController {
+    private let checker = AuthenticationCheck()
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -44,14 +49,14 @@ class SignUp: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     
     @IBAction func createAnAccountAction(_ sender: Any) {
-        do {
-            // try evaluating username, email, password, and confirm password from their UITextField's respectively
-            try checker.evaluate(username: usernameField.text!, email: emailField.text!, password: passwordField.text!, confirmPassword: confirmPasswordField.text!)
+        checker.evaluateWithShake(usernameField: usernameField, emailField: emailField, passwordField: passwordField, confirmPasswordField: confirmPasswordField, currentViewController: self) {
+            
+            // If and when your code enters the completionHandler, that means the user satisfied the evaluater.
             print("Perfect credentials entered!")
             view.endEditing(true)
             errorLabel.isHidden = true
             errorLabel.text?.removeAll()
-            
+
             let successVC = storyboard?.instantiateViewController(withIdentifier: "SuccessfullyLoggedIn") as! SuccessfullyLoggedIn
             navigationController?.pushViewController(successVC, animated: true)
             let signedInUser = UserProfile()
@@ -60,80 +65,98 @@ class SignUp: UIViewController {
             signedInUser.password = passwordField.text!
             successVC.signedInUser = signedInUser
         }
-
-        // General Errors
-         catch UITextFieldAuthenticationGeneralError.passwordContainsEmail {
-             showAlert(message: "Password contains email", textFields: [usernameField, passwordField])
-        } catch UITextFieldAuthenticationGeneralError.passwordContainsUsername {
-            showAlert(message: "Password contains username", textFields: [passwordField, usernameField])
-        } catch UITextFieldAuthenticationGeneralError.emailContainsPassword {
-            showAlert(message: "Email contains password", textFields: [emailField, passwordField])
-        } catch UITextFieldAuthenticationGeneralError.usernameContainsEmail {
-            showAlert(message: "Username contains email", textFields: [usernameField, emailField])
-        } catch UITextFieldAuthenticationGeneralError.usernameContainsPassword {
-            showAlert(message: "Username contains password", textFields: [usernameField, passwordField])
-        } catch UITextFieldAuthenticationGeneralError.passwordDoesNotMatchConfirmPassword {
-            showAlert(message: "Password does not match Confirm Password", textFields: [passwordField, confirmPasswordField])
-        }
-
-        // Username Error
-         catch UITextFieldAuthenticationUsernameError.empty {
-            showAlert(message: "Please enter a username", textFields: [usernameField])
-             usernameField.shake(baseColor: UIColor.systemPink.cgColor, numberOfShakes: 3, revert: true)
-        }
-
-        // Email Errors
-         catch UITextFieldAuthenticationEmailError.empty {
-            showAlert(message: "Please enter an email", textFields: [emailField])
-        } catch UITextFieldAuthenticationEmailError.invalidEmail {
-            showAlert(message: "Please enter a valid email", textFields: [emailField])
-        }
-
-        // Password Errors
-         catch UITextFieldAuthenticationPasswordError.empty {
-           showAlert(message: "Please enter a password", textFields: [passwordField])
-        } catch UITextFieldAuthenticationPasswordError.passwordContainsNoNumbers {
-            showAlert(message: "At least 1 number is required in the password", textFields: [passwordField])
-        } catch UITextFieldAuthenticationPasswordError.passwordContainsNoLetters {
-            showAlert(message: "At Least 1 letter is required in the password", textFields: [passwordField])
-        } catch UITextFieldAuthenticationPasswordError.passwordContainsMoreCharacterLimit {
-            showAlert(message: "The password cannot exceed \(checker.passwordMinimumLength + 1) characters in length", textFields: [passwordField])
-        } catch UITextFieldAuthenticationPasswordError.passwordTooShort {
-            showAlert(message: "The password must include \(checker.passwordMinimumLength) characters", textFields: [passwordField])
-        } catch {
-            fatalError("Error uncaught = \(error.localizedDescription)")
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-    
-    private func showAlert(message:String, textFields: [UITextField]) {
-        let alert = UIAlertController(title: message, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-        
-        errorLabel.isHidden = false
-        errorLabel.text = message
-        
-        for textField in textFields {
-            textField.shake(baseColor: UIColor.systemPink.cgColor, numberOfShakes: 3, revert: true)
-        }
-    }
+}
 ```
+### Customization
 
-### Evaluate Username, Email, Password, and Confirm Password with
+If you do not like the default settings, you can change virtually everything.
+
+#### Password Requires at Least One Number
+
+The default value is true, but you can let your users create a password without a number
+
+```swift
+
+// Changing the requirement to false
+checker.passwordRequiresAtLeastOneNumber = false
 
 ```
+
+#### Password Requires at Least One Letter
+
+The default value is true, but you can change it to your needs
+
+```swift
+
+// Changing the requirement to false
+checker.passwordRequiresAtLeastOneLetter = false
+
+```
+
+#### Password Minimum Length
+
+The default value is 8, but you can change it to your needs
+
+```swift
+
+// Changing the password minimum length from the default(8) to 20
+checker.passwordMinimumLength = 20
+
+```
+
+#### Password Maximum Length
+
+The default value is 100, but you can change it to your needs
+
+```swift
+
+// Changing the password maximum length from the default (100) to 50
+checker.passwordMaximumLength = 50
+
+```
+
+✏️ Make sure the minimum and maximum lengths do not conflict or else your application program will crash forcing you to fix the difference
+
+### Layouts:
+
+If you need to manage multiple of these settings in different areas of your applications, then layouts are for you
+
+##### Customize the layout with the ```AuthenticationCheckLayout```` protocol
+
+```swift
 import UIKit
 
+class ViewController: UIViewController{
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        checker.layout = MyAuthenticationCheckLayout()
+    }
+}
 
+class MyAuthenticationCheckLayout: AuthenticationCheckLayout {
 
+    var passwordRequiresAtLeastOneNumber = false    
+    var passwordRequiresAtLeastOneLetter = false
+    var passwordMinimumLength = 18
+    var passwordMaximumLength = 20
+}
 ```
 
+#### Update your panel layout
 
+Manually set the ```AuthenticationCheck.layout``` to the new layout object directly
+
+```swift
+checker.layout = NewLayout()
+checker.invalidateLayout() // If needed
+```
+    
 ## Created and Maintained by:
 
 [Jacob Trentini](https://github.com/Awesomeplayer165)
