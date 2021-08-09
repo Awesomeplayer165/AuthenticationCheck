@@ -81,24 +81,6 @@ enum AuthenticationCheckGeneralError: Error {
     case passwordDoesNotMatchConfirmPassword
 }
 
-enum AuthenticationCheckPasswordRequirementsError: Error {
-    
-    /// The password minimum and maximum constraints are incorrect
-    ///
-    /// For example, if the minimum required length is 10 and the maximum length is 9, then it will return this error
-    case conflictingPasswordMinumumAndMaximumRequirements
-    
-    /// The password minimum requirement was invalid
-    ///
-    /// This can usually occur when you set this value to a negative integer
-    case passwordMinimumRequirementInvalid
-    
-    /// The password maximum requirement was invalid
-    ///
-    /// This can usually occur when you set this value to a negative integer
-    case passwordMaximumRequirementInValid
-}
-
 /// The main class that includes functions to check an application's needs for authentication
 class AuthenticationCheck {
     private let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -123,9 +105,13 @@ class AuthenticationCheck {
     ///The default value is 100
     public var passwordMaximumLength = 100
     
+    
+    /// The layout for custom settings
+    ///
+    /// You can have multiple different layouts for different occasions throughout your application, if needed
     public var layout:AuthenticationCheckLayout? {
         get {
-            return layout
+            return self.layout
         }
         set {
             if let layout = newValue {
@@ -142,6 +128,8 @@ class AuthenticationCheck {
         }
     }
     
+    
+    /// Invalidating the layout resets it to the standard layout values.
     public func invalidateLayout() {
         layout = nil
     }
@@ -213,6 +201,20 @@ class AuthenticationCheck {
         }
     }
     
+    private func checkPasswordRequirements() {
+        guard passwordMinimumLength > 0 else {
+            fatalError("Password minimum requirement invalid. Make sure this value is not negative")
+        }
+        
+        guard passwordMaximumLength > 0 else {
+            fatalError("Password maximum requirement invalid. Make sure this value is not negative")
+        }
+        
+        guard passwordMinimumLength < passwordMaximumLength else {
+            fatalError("Conflicting Password minimum and maximum requirements. Make sure they do not conflict. Refer to the documentation for more information")
+        }
+    }
+    
     /// This evaluates Username, Email, Password, and Confirm Password Fields.
     ///
     /// For applications that do not use usernames, use the evaluate(email:, password:, confirmPassword:) function
@@ -223,17 +225,7 @@ class AuthenticationCheck {
     ///   - confirmPassword: Confirm Password String
     public func evaluate(username: String, email: String, password: String, confirmPassword: String) throws {
         
-        guard passwordMinimumLength > 0 else {
-            throw AuthenticationCheckPasswordRequirementsError.passwordMinimumRequirementInvalid
-        }
-        
-        guard passwordMaximumLength > 0 else {
-            throw AuthenticationCheckPasswordRequirementsError.passwordMaximumRequirementInValid
-        }
-        
-        guard passwordMinimumLength < passwordMaximumLength else {
-            throw AuthenticationCheckPasswordRequirementsError.conflictingPasswordMinumumAndMaximumRequirements
-        }
+        checkPasswordRequirements()
         
         guard !username.contains(email) else {
             throw AuthenticationCheckGeneralError.usernameContainsEmail
@@ -273,9 +265,7 @@ class AuthenticationCheck {
     ///   - confirmPassword: The Confirm Password String the user entered
     public func evaluate(email: String, password: String, confirmPassword: String) throws {
         
-        guard passwordMinimumLength <= passwordMaximumLength else {
-            throw AuthenticationCheckPasswordRequirementsError.conflictingPasswordMinumumAndMaximumRequirements
-        }
+        checkPasswordRequirements()
         
         guard !email.contains(password) else {
             throw AuthenticationCheckGeneralError.emailContainsPassword
@@ -324,6 +314,7 @@ extension String {
     }
 }
 
+/// The layout protocol itself.
 protocol AuthenticationCheckLayout {
     var passwordRequiresAtLeastOneNumber:Bool { get }
     var passwordRequiresAtLeastOneLetter:Bool { get }
@@ -351,58 +342,69 @@ do {
     print("Perfect Username, Email, Password, and Confirm Password!")
 }
 
-// Password Conflicting Errors
-
-catch AuthenticationCheckPasswordRequirementsError.passwordMinimumRequirementInvalid {
-    print("Password minimum requirement invalid. Make sure this value is not negative")
-}
-
-catch AuthenticationCheckPasswordRequirementsError.passwordMaximumRequirementInValid {
-    print("Password maximum requirement invalid. Make sure this value is not negative")
-}
-
-catch AuthenticationCheckPasswordRequirementsError.conflictingPasswordMinumumAndMaximumRequirements {
-    print("Conflicting Password minimum and maximum requirements. Make sure they do not conflict. Refer to the documentation for more information")
-}
-
 // General Errors
 catch AuthenticationCheckGeneralError.passwordContainsEmail {
     print("Password contains email")
-} catch AuthenticationCheckGeneralError.passwordContainsUsername {
+}
+
+catch AuthenticationCheckGeneralError.passwordContainsUsername {
     print("Password contains username")
-} catch AuthenticationCheckGeneralError.emailContainsPassword {
+}
+
+catch AuthenticationCheckGeneralError.emailContainsPassword {
     print("Email contains password")
-} catch AuthenticationCheckGeneralError.usernameContainsEmail {
+}
+
+catch AuthenticationCheckGeneralError.usernameContainsEmail {
     print("Username contains email")
-} catch AuthenticationCheckGeneralError.usernameContainsPassword {
+}
+
+catch AuthenticationCheckGeneralError.usernameContainsPassword {
     print("Username contains password")
-} catch AuthenticationCheckGeneralError.passwordDoesNotMatchConfirmPassword {
+}
+
+catch AuthenticationCheckGeneralError.passwordDoesNotMatchConfirmPassword {
     print("Password does not match Confirm Password")
 }
 
 // Username Error
- catch AuthenticationCheckUsernameError.empty {
+
+catch AuthenticationCheckUsernameError.empty {
     print("Please enter a username")
 }
 
 // Email Errors
- catch AuthenticationCheckEmailError.empty {
+
+catch AuthenticationCheckEmailError.empty {
     print("Please enter an email")
-} catch AuthenticationCheckEmailError.invalidEmail {
+}
+
+catch AuthenticationCheckEmailError.invalidEmail {
     print("Please enter a valid email")
 }
 
 // Password Errors
- catch AuthenticationCheckPasswordError.empty {
+
+catch AuthenticationCheckPasswordError.empty {
    print("Please enter a password")
-} catch AuthenticationCheckPasswordError.passwordContainsNoNumbers {
+}
+
+catch AuthenticationCheckPasswordError.passwordContainsNoNumbers {
     print("At least 1 number is required in the password")
-} catch AuthenticationCheckPasswordError.passwordContainsNoLetters {
+}
+
+catch AuthenticationCheckPasswordError.passwordContainsNoLetters {
     print("At Least 1 letter is required in the password")
-} catch AuthenticationCheckPasswordError.passwordTooLong {
+}
+
+catch AuthenticationCheckPasswordError.passwordTooLong {
     print("The password cannot exceed \(checker.passwordMinimumLength + 1) characters in length")
-} catch AuthenticationCheckPasswordError.passwordTooShort {
+}
+
+catch AuthenticationCheckPasswordError.passwordTooShort {
     print("The password must include \(checker.passwordMinimumLength) characters")
-} catch {
+}
+
+catch {
     print("Error uncaught = \(error.localizedDescription)")
 }

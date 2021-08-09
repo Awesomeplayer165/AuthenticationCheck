@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  TextField ErrorChecking
+//  AuthenticationCheck
 //
 //  Created by Jacob Trentini on 8/7/21.
 //

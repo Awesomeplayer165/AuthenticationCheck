@@ -14,12 +14,11 @@
 		1D700D3126BF4C00007F1833 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D700D3026BF4C00007F1833 /* Assets.xcassets */; };
 		1D700D3426BF4C00007F1833 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D700D3226BF4C00007F1833 /* LaunchScreen.storyboard */; };
 		1D700D3C26BF4FA3007F1833 /* Successfully Logged In.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D700D3B26BF4FA3007F1833 /* Successfully Logged In.swift */; };
-		1D700D3E26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D700D3D26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift */; };
-		1DECDDDB26BFA85B00E1E75F /* textFieldShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECDDDA26BFA85B00E1E75F /* textFieldShake.swift */; };
+		1D700D3E26BF4FDF007F1833 /* AuthenticationCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D700D3D26BF4FDF007F1833 /* AuthenticationCheck.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1D700D2426BF4BFF007F1833 /* TextField ErrorChecking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TextField ErrorChecking.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D700D2426BF4BFF007F1833 /* AuthenticationCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthenticationCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D700D2726BF4BFF007F1833 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D700D2926BF4BFF007F1833 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1D700D2B26BF4BFF007F1833 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
@@ -28,8 +27,7 @@
 		1D700D3326BF4C00007F1833 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1D700D3526BF4C00007F1833 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D700D3B26BF4FA3007F1833 /* Successfully Logged In.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Successfully Logged In.swift"; sourceTree = "<group>"; };
-		1D700D3D26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldAuthenticationCheck.swift; sourceTree = "<group>"; };
-		1DECDDDA26BFA85B00E1E75F /* textFieldShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textFieldShake.swift; sourceTree = "<group>"; };
+		1D700D3D26BF4FDF007F1833 /* AuthenticationCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCheck.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +44,7 @@
 		1D700D1B26BF4BFF007F1833 = {
 			isa = PBXGroup;
 			children = (
-				1D700D2626BF4BFF007F1833 /* TextField ErrorChecking */,
+				1D700D2626BF4BFF007F1833 /* AuthenticationCheck */,
 				1D700D2526BF4BFF007F1833 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,34 +52,33 @@
 		1D700D2526BF4BFF007F1833 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D700D2426BF4BFF007F1833 /* TextField ErrorChecking.app */,
+				1D700D2426BF4BFF007F1833 /* AuthenticationCheck.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1D700D2626BF4BFF007F1833 /* TextField ErrorChecking */ = {
+		1D700D2626BF4BFF007F1833 /* AuthenticationCheck */ = {
 			isa = PBXGroup;
 			children = (
 				1D700D2726BF4BFF007F1833 /* AppDelegate.swift */,
 				1D700D2926BF4BFF007F1833 /* SceneDelegate.swift */,
 				1D700D2B26BF4BFF007F1833 /* SignUp.swift */,
 				1D700D3B26BF4FA3007F1833 /* Successfully Logged In.swift */,
-				1D700D3D26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift */,
+				1D700D3D26BF4FDF007F1833 /* AuthenticationCheck.swift */,
 				1D700D2D26BF4BFF007F1833 /* Main.storyboard */,
-				1DECDDDA26BFA85B00E1E75F /* textFieldShake.swift */,
 				1D700D3026BF4C00007F1833 /* Assets.xcassets */,
 				1D700D3226BF4C00007F1833 /* LaunchScreen.storyboard */,
 				1D700D3526BF4C00007F1833 /* Info.plist */,
 			);
-			path = "TextField ErrorChecking";
+			path = AuthenticationCheck;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D700D2326BF4BFF007F1833 /* TextField ErrorChecking */ = {
+		1D700D2326BF4BFF007F1833 /* AuthenticationCheck */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D700D3826BF4C00007F1833 /* Build configuration list for PBXNativeTarget "TextField ErrorChecking" */;
+			buildConfigurationList = 1D700D3826BF4C00007F1833 /* Build configuration list for PBXNativeTarget "AuthenticationCheck" */;
 			buildPhases = (
 				1D700D2026BF4BFF007F1833 /* Sources */,
 				1D700D2126BF4BFF007F1833 /* Frameworks */,
@@ -91,9 +88,9 @@
 			);
 			dependencies = (
 			);
-			name = "TextField ErrorChecking";
+			name = AuthenticationCheck;
 			productName = "TextField ErrorChecking";
-			productReference = 1D700D2426BF4BFF007F1833 /* TextField ErrorChecking.app */;
+			productReference = 1D700D2426BF4BFF007F1833 /* AuthenticationCheck.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -111,7 +108,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1D700D1F26BF4BFF007F1833 /* Build configuration list for PBXProject "TextField ErrorChecking" */;
+			buildConfigurationList = 1D700D1F26BF4BFF007F1833 /* Build configuration list for PBXProject "AuthenticationCheck" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -124,7 +121,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D700D2326BF4BFF007F1833 /* TextField ErrorChecking */,
+				1D700D2326BF4BFF007F1833 /* AuthenticationCheck */,
 			);
 		};
 /* End PBXProject section */
@@ -149,9 +146,8 @@
 			files = (
 				1D700D2C26BF4BFF007F1833 /* SignUp.swift in Sources */,
 				1D700D3C26BF4FA3007F1833 /* Successfully Logged In.swift in Sources */,
-				1D700D3E26BF4FDF007F1833 /* UITextFieldAuthenticationCheck.swift in Sources */,
+				1D700D3E26BF4FDF007F1833 /* AuthenticationCheck.swift in Sources */,
 				1D700D2826BF4BFF007F1833 /* AppDelegate.swift in Sources */,
-				1DECDDDB26BFA85B00E1E75F /* textFieldShake.swift in Sources */,
 				1D700D2A26BF4BFF007F1833 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,7 +300,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B4MZRFLMLS;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "TextField ErrorChecking/Info.plist";
+				INFOPLIST_FILE = AuthenticationCheck/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AuthenticationCheck;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -315,7 +312,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jacobtrentini.TextField-ErrorChecking";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jacobtrentini.AuthenticationCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -334,7 +331,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B4MZRFLMLS;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "TextField ErrorChecking/Info.plist";
+				INFOPLIST_FILE = AuthenticationCheck/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AuthenticationCheck;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -345,7 +343,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jacobtrentini.TextField-ErrorChecking";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jacobtrentini.AuthenticationCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -357,7 +355,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D700D1F26BF4BFF007F1833 /* Build configuration list for PBXProject "TextField ErrorChecking" */ = {
+		1D700D1F26BF4BFF007F1833 /* Build configuration list for PBXProject "AuthenticationCheck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D700D3626BF4C00007F1833 /* Debug */,
@@ -366,7 +364,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1D700D3826BF4C00007F1833 /* Build configuration list for PBXNativeTarget "TextField ErrorChecking" */ = {
+		1D700D3826BF4C00007F1833 /* Build configuration list for PBXNativeTarget "AuthenticationCheck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D700D3926BF4C00007F1833 /* Debug */,
