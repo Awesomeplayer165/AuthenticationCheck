@@ -2,7 +2,7 @@
 
 **This repository shows how to check username, email, and password UITextFields while creating an account for a user.**
 
-[https://github.com/Awesomeplayer165/UITextField-Error-Checking/blob/95f506561c423dc9222d33292c1e5bd4bab58053/UITextField%20ErrorChecking%20demo.MP4]
+![Uploading UITextField ErrorCheck Demo.gif…]()
 
 ## Features:
 
@@ -10,6 +10,7 @@
 - None of the fields' values can match each other's values
 - The password field must be strong. More information below
 - If there a problem that arises, then the appropriate UITextField would shake and become red. Furthermore, there is a message informing the user on the problem.
+- If your app does not need username, ErrorChecking can exclude username
 
 #### Password Constraints:
 - At least 8 characters
@@ -23,6 +24,8 @@
 ## Usage: 
 
 Copy the UITextFieldAuthenticationChecking.swift into your Authentication project
+
+
 
 ## Created and Maintained by:
 
