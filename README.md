@@ -56,10 +56,10 @@ class SignUp: UIViewController {
 
             let successVC = storyboard?.instantiateViewController(withIdentifier: "SuccessfullyLoggedIn") as! SuccessfullyLoggedIn
             navigationController?.pushViewController(successVC, animated: true)
-            let signedInUser = UserProfile()
-            signedInUser.username = usernameField.text!
-            signedInUser.email = emailField.text!
-            signedInUser.password = passwordField.text!
+            let signedInUser       = UserProfile()
+            signedInUser.username  = usernameField.text!
+            signedInUser.email     = emailField.text!
+            signedInUser.password  = passwordField.text!
             successVC.signedInUser = signedInUser
         }
     }
@@ -132,6 +132,9 @@ checker.evaluate(username: usernameField.text!, email: emailField.text!, passwor
 checker.evaluate(email: emailField.text!, password: passwordField.text!, confirmPassword: confirmPassword.text!)
 
 ```
+
+✏️ Basically, if your app uses a confirmPassword, then use the appropriate function.
+
 
 Here is a very quick way to implement this:
 
