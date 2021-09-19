@@ -32,18 +32,18 @@ import UIKit
 
 class UserProfile {
     var username = String()
-    var email = String()
+    var email    = String()
     var password = String()
 }
 
 class SignUp: UIViewController {
     private let checker = AuthenticationCheck()
     
-    @IBOutlet weak var usernameField: UITextField!
-    @IBOutlet weak var emailField: UITextField!
-    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var usernameField:        UITextField!
+    @IBOutlet weak var emailField:           UITextField!
+    @IBOutlet weak var passwordField:        UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
-    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var errorLabel:           UILabel!
     
     @IBAction func createAnAccountAction(_ sender: Any) {
         checker.evaluateWithShake(usernameField: usernameField, emailField: emailField, passwordField: passwordField, confirmPasswordField: confirmPasswordField, currentViewController: self) {
