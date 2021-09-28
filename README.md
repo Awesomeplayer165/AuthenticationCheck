@@ -140,6 +140,7 @@ If you want total or manual control of what will happen if the user fails to sat
 
 // Use the evaluate(username:, email:, password:, confirmPassword:)
 checker.evaluate(username: usernameField.text!, email: emailField.text!, password: passwordField.text!, confirmPassword: confirmPassword.text!)
+
 // If your program does not need username:
 checker.evaluate(email: emailField.text!, password: passwordField.text!, confirmPassword: confirmPassword.text!)
 
@@ -285,7 +286,7 @@ Manually set the **```AuthenticationCheck.layout```** to the new layout object d
 
 ```swift
 checker.layout = NewLayout()
-checker.invalidateLayout() // If needed
+checker.invalidateLayout()  // If needed
 ```
 
     
