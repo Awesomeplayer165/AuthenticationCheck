@@ -39,9 +39,15 @@ Copy the AuthenticationCheck.swift file into your Authentication project
 import UIKit
 
 class UserProfile {
-    var username = String()
-    var email    = String()
-    var password = String()
+    let username: String
+    let email:    String
+    let password: String
+    
+    func init(username: String, email: String, password: String) {
+        self.username = username
+        self.email    = email
+        self.password = password
+    }
 }
 
 class SignUp: UIViewController {
@@ -64,11 +70,9 @@ class SignUp: UIViewController {
 
             let successVC = storyboard?.instantiateViewController(withIdentifier: "SuccessfullyLoggedIn") as! SuccessfullyLoggedIn
             navigationController?.pushViewController(successVC, animated: true)
-            let signedInUser       = UserProfile()
-            signedInUser.username  = usernameField.text!
-            signedInUser.email     = emailField.text!
-            signedInUser.password  = passwordField.text!
-            successVC.signedInUser = signedInUser
+            successVC.signedInUser = UserProfile(username: usernameField.text!,
+                                                 email:    emailField.text!,
+                                                 password: passwordField.text!)
         }
     }
     
@@ -151,9 +155,15 @@ Here is a very quick way to implement this:
 import UIKit
 
 class UserProfile {
-    var username = String()
-    var email = String()
-    var password = String()
+    let username: String
+    let email:    String
+    let password: String
+    
+    func init(username: String, email: String, password: String) {
+        self.username = username
+        self.email    = email
+        self.password = password
+    }
 }
 
 class SignUp: UIViewController {
@@ -175,11 +185,9 @@ class SignUp: UIViewController {
 
             let successVC = storyboard?.instantiateViewController(withIdentifier: "SuccessfullyLoggedIn") as! SuccessfullyLoggedIn
             navigationController?.pushViewController(successVC, animated: true)
-            let signedInUser = UserProfile()
-            signedInUser.username = usernameField.text!
-            signedInUser.email = emailField.text!
-            signedInUser.password = passwordField.text!
-            successVC.signedInUser = signedInUser
+            successVC.signedInUser = UserProfile(username: usernameField.text!,
+                                                 email:    emailField.text!,
+                                                 password: passwordField.text!)
         }
 
         // General Errors
