@@ -43,7 +43,7 @@ class UserProfile {
     let email:    String
     let password: String
     
-    func init(username: String, email: String, password: String) {
+    init(username: String, email: String, password: String) {
         self.username = username
         self.email    = email
         self.password = password
@@ -159,7 +159,7 @@ class UserProfile {
     let email:    String
     let password: String
     
-    func init(username: String, email: String, password: String) {
+    init(username: String, email: String, password: String) {
         self.username = username
         self.email    = email
         self.password = password
