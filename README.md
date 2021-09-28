@@ -17,7 +17,15 @@
 - You can change these password constraints to your needs
 
 #### This example project also shows how to:
-- Utilize throwing Errors in a function.
+- Exploring Swift
+    - Utilize throwing Errors in a function
+    - Use of completionHandlers to denote that an operation has passed
+- Create an extensive and useful README.md file
+- License file - MIT License
+- Creating Open Source tools
+
+#### Future Features:
+- Upon entering the completionHandler, the developer can setup warnings that the evaluater has found
 
 ## Installation
 
