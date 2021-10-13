@@ -4,6 +4,27 @@
 
 ![UITextField ErrorCheck Demo](https://user-images.githubusercontent.com/70717139/128651293-bdca203c-2817-4b20-a50b-e93718035c4c.gif)
 
+## Table of Contents
+- Features:
+    - Password Constraints
+    - Real World Application
+    - Future Features
+- Installation
+- Getting Started: Evaluating Username, Email, Password and Confirm Password 
+- Customization
+    - Password Constraints
+        - Requires at least one number
+        - Requires at least one letter
+        - Minimum Length
+        - Maximum Length
+    - Evaluation Options:
+        - Evaluate with Confirm Password: Username, Email, Password and Confirm Password
+        - Evaluate without Confirm Password: Username, Email and Password
+    - Layouts:
+        - Creating class of off the layout
+        - Updating and Invalidating the layout
+- Author
+
 ## Features:
 
 - None of the fields' values can match each other's values
@@ -35,7 +56,7 @@ Copy the AuthenticationCheck.swift file into your Authentication project
 
 ## Getting Started
 
-### Evaluate Username, Email, Password, and Confirm Password
+### Evaluate Username, Email, Password and Confirm Password
 
 ```swift
 import UIKit
@@ -66,6 +87,8 @@ class SignUp: UIViewController {
             
             // If and when your code enters the completionHandler, that means the user satisfied the evaluater.
             print("Perfect credentials entered!")
+            
+            // Example code of pushing a new vc onto the current nav controller
             view.endEditing(true)
             errorLabel.isHidden = true
             errorLabel.text?.removeAll()
